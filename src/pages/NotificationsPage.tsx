@@ -154,7 +154,7 @@ const NotificationModal = ({ notification, onClose }: { notification: Notificati
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-sm font-medium text-foreground">Loại</label>
-              <select value={form.type} onChange={(e) => setForm(f => ({ ...f, type: e.target.value }))} className="flex h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
+              <select value={form.type} onChange={(e) => setForm(f => ({ ...f, type: e.target.value as NotificationType }))} className="flex h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
                 <option value="promotion">Khuyến mãi</option>
                 <option value="event">Sự kiện</option>
                 <option value="sale">Sale</option>
