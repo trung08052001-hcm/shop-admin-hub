@@ -18,7 +18,7 @@ const NotificationsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [editNotif, setEditNotif] = useState<Notification | null>(null);
 
-  const notifications: Notification[] = Array.isArray(data) ? data : data?.data ?? [];
+  const notifications: Notification[] = Array.isArray(data) ? data : (data as any)?.data ?? [];
 
   const openAdd = () => { setEditNotif(null); setShowModal(true); };
   const openEdit = (n: Notification) => { setEditNotif(n); setShowModal(true); };
