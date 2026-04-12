@@ -1,8 +1,8 @@
 import axios from 'axios';
-import type { Product, Order, User, Notification, OrderStatus } from '@/types';
+import type { Product, Order, User, Notification, OrderStatus, Review } from '@/types';
 
 // Configure this to point to your Express.js backend
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -38,10 +38,10 @@ export const productApi = {
 // ─── Orders ──────────────────────────────────────────
 export const orderApi = {
   getAll: (page = 1, limit = 10, status?: string) =>
-    api.get('/orders', { params: { page, limit, status } }),
+    api.get('/orders/all', { params: { page, limit, status } }),
   getById: (id: string) => api.get<Order>(`/orders/${id}`),
   updateStatus: (id: string, status: OrderStatus) =>
-    api.patch<Order>(`/orders/${id}/status`, { status }),
+    api.put<Order>(`/orders/${id}/status`, { status }),
 };
 
 // ─── Users ───────────────────────────────────────────
@@ -64,6 +64,12 @@ export const notificationApi = {
 // ─── Dashboard Stats (mock aggregation — add a real endpoint on your backend) ─
 export const dashboardApi = {
   getStats: () => api.get('/admin/stats'),
+};
+
+// ─── Reviews ─────────────────────────────────────────
+export const reviewApi = {
+  getAll: () => api.get<Review[]>('/reviews'),
+  delete: (id: string) => api.delete(`/reviews/${id}`),
 };
 
 export default api;

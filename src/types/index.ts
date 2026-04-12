@@ -82,3 +82,13 @@ export interface DashboardStats {
   recentOrders: Order[];
   ordersByStatus: Record<OrderStatus, number>;
 }
+
+export interface Review {
+  _id: string;
+  user: { _id: string; name: string };
+  product: { _id: string; name: string };
+  rating: number;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+}

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { productApi, orderApi, userApi, notificationApi, dashboardApi, authApi } from '@/services/api';
-import type { Product, Order, OrderStatus, Notification } from '@/types';
+import { productApi, orderApi, userApi, notificationApi, dashboardApi, authApi, reviewApi } from '@/services/api';
+import type { Product, Order, OrderStatus, Notification, Review } from '@/types';
 import { toast } from 'sonner';
 
 // ─── Auth ────────────────────────────────────────────
@@ -116,5 +116,21 @@ export const useDeleteNotification = () => {
     mutationFn: (id: string) => notificationApi.delete(id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['notifications'] }); toast.success('Xóa thông báo thành công'); },
     onError: () => toast.error('Lỗi khi xóa thông báo'),
+  });
+};
+
+// ─── Reviews ─────────────────────────────────────────
+export const useReviews = () =>
+  useQuery<Review[]>({
+    queryKey: ['reviews'],
+    queryFn: () => reviewApi.getAll().then((r) => r.data),
+  });
+
+export const useDeleteReview = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => reviewApi.delete(id),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['reviews'] }); toast.success('Xóa bình luận thành công'); },
+    onError: () => toast.error('Lỗi khi xóa bình luận'),
   });
 };

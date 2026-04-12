@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import AdminLayout from '@/components/AdminLayout';
-import OrderStatusBadge from '@/components/OrderStatusBadge';
 import { motion } from 'framer-motion';
 import { Eye, X, Loader2 } from 'lucide-react';
 import { useOrders, useUpdateOrderStatus } from '@/hooks/useApi';
@@ -84,7 +83,7 @@ const OrdersPage = () => {
                         <td className="px-6 py-4 text-sm text-foreground">{typeof order.user === 'object' ? order.user.name : ''}</td>
                         <td className="px-6 py-4 text-sm text-muted-foreground">{order.items.map(i => i.name).join(', ')}</td>
                         <td className="px-6 py-4 text-sm font-semibold text-foreground">{formatCurrency(order.totalPrice)}</td>
-                        <td className="px-6 py-4"><OrderStatusBadge status={order.status} /></td>
+                        <td className="px-6 py-4"><StatusSelect order={order} /></td>
                         <td className="px-6 py-4 text-sm text-muted-foreground">{new Date(order.createdAt).toLocaleDateString('vi-VN')}</td>
                         <td className="px-6 py-4 text-right">
                           <button onClick={() => setSelectedOrder(order)} className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
@@ -189,6 +188,29 @@ const OrderDetailModal = ({ order, onClose }: { order: Order; onClose: () => voi
         </div>
       </motion.div>
     </div>
+  );
+};
+
+const StatusSelect = ({ order }: { order: Order }) => {
+  const updateStatus = useUpdateOrderStatus();
+  
+  return (
+    <select
+      value={order.status}
+      onChange={(e) => updateStatus.mutate({ id: order._id, status: e.target.value as OrderStatus })}
+      disabled={updateStatus.isPending}
+      className={`appearance-none cursor-pointer inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1 transition-colors ${
+        order.status === 'pending' ? 'bg-warning/10 text-warning border-warning/30 hover:bg-warning/20' :
+        order.status === 'processing' ? 'bg-info/10 text-info border-info/30 hover:bg-info/20' :
+        order.status === 'shipped' ? 'bg-primary/10 text-primary border-primary/30 hover:bg-primary/20' :
+        order.status === 'delivered' ? 'bg-success/10 text-success border-success/30 hover:bg-success/20' :
+        'bg-destructive/10 text-destructive border-destructive/30 hover:bg-destructive/20'
+      } ${updateStatus.isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
+      {(['pending', 'processing', 'shipped', 'delivered', 'cancelled'] as OrderStatus[]).map((s) => (
+        <option key={s} value={s} className="text-foreground bg-background">{statusLabels[s]}</option>
+      ))}
+    </select>
   );
 };
 

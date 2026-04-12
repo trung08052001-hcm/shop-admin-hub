@@ -9,6 +9,7 @@ import ProductsPage from "./pages/ProductsPage";
 import OrdersPage from "./pages/OrdersPage";
 import UsersPage from "./pages/UsersPage";
 import NotificationsPage from "./pages/NotificationsPage";
+import ReviewsPage from "./pages/ReviewsPage";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
 import { ReactNode } from "react";
@@ -34,6 +35,7 @@ const AppRoutes = () => (
     <Route path="/products" element={<ProtectedRoute><ProductsPage /></ProtectedRoute>} />
     <Route path="/orders" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
     <Route path="/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
+    <Route path="/reviews" element={<ProtectedRoute><ReviewsPage /></ProtectedRoute>} />
     <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
     <Route path="*" element={<NotFound />} />
   </Routes>
