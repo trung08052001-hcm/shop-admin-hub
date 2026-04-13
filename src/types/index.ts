@@ -92,3 +92,25 @@ export interface Review {
   createdAt: string;
   updatedAt: string;
 }
+
+// ─── Chat ───────────────────────────────────────────
+
+export interface ChatMessage {
+  _id: string;
+  room: string;
+  sender: string;
+  senderModel: 'User' | 'Admin';
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ChatRoom {
+  _id: string;
+  user: User;
+  lastMessage?: string;
+  unreadCountAdmin: number;
+  unreadCountUser: number;
+  createdAt: string;
+  updatedAt: string;
+}

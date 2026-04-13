@@ -20,6 +20,7 @@ const navItems = [
   { label: 'Sản phẩm', icon: Package, path: '/products' },
   { label: 'Đơn hàng', icon: ShoppingCart, path: '/orders' },
   { label: 'Người dùng', icon: Users, path: '/users' },
+  { label: 'Inbox', icon: MessageSquare, path: '/inbox' },
   { label: 'Đánh giá', icon: MessageSquare, path: '/reviews' },
   { label: 'Thông báo', icon: Bell, path: '/notifications' },
 ];
