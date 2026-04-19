@@ -1,7 +1,7 @@
 import AdminLayout from '@/components/AdminLayout';
 import StatCard from '@/components/StatCard';
 import OrderStatusBadge from '@/components/OrderStatusBadge';
-import { Package, ShoppingCart, Users, DollarSign, TrendingUp, Loader2 } from 'lucide-react';
+import { Package, ShoppingCart, Users, DollarSign, TrendingUp, Loader2, UserPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useDashboardStats } from '@/hooks/useApi';
 import type { Order } from '@/types';
@@ -34,11 +34,12 @@ const DashboardPage = () => {
 
         {stats && (
           <>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               <StatCard title="Tổng doanh thu" value={formatCurrency(stats.totalRevenue ?? 0)} icon={DollarSign} variant="primary" />
               <StatCard title="Đơn hàng" value={stats.totalOrders ?? 0} icon={ShoppingCart} variant="info" />
               <StatCard title="Sản phẩm" value={stats.totalProducts ?? 0} icon={Package} variant="success" />
               <StatCard title="Người dùng" value={stats.totalUsers ?? 0} icon={Users} variant="warning" />
+              <StatCard title="Ứng viên" value={stats.totalRecruitments ?? 0} icon={UserPlus} variant="primary" />
             </div>
 
             {stats.recentOrders && stats.recentOrders.length > 0 && (

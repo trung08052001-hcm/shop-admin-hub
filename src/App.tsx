@@ -14,6 +14,7 @@ import ReviewsPage from "./pages/ReviewsPage";
 import InboxPage from "./pages/InboxPage";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
+import RecruitmentsPage from "./pages/RecruitmentsPage";
 import { ReactNode } from "react";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const AppRoutes = () => (
     <Route path="/inbox" element={<ProtectedRoute><InboxPage /></ProtectedRoute>} />
     <Route path="/reviews" element={<ProtectedRoute><ReviewsPage /></ProtectedRoute>} />
     <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+    <Route path="/recruitments" element={<ProtectedRoute><RecruitmentsPage /></ProtectedRoute>} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );

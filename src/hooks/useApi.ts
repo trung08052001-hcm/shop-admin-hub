@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { productApi, orderApi, userApi, notificationApi, dashboardApi, authApi, reviewApi } from '@/services/api';
-import type { Product, Order, OrderStatus, Notification, Review } from '@/types';
+import { productApi, orderApi, userApi, notificationApi, dashboardApi, authApi, reviewApi, recruitmentApi } from '@/services/api';
+import type { Product, Order, OrderStatus, Notification, Review, Recruitment, RecruitmentStatus } from '@/types';
 import { toast } from 'sonner';
 
 // ─── Auth ────────────────────────────────────────────
@@ -132,5 +132,37 @@ export const useDeleteReview = () => {
     mutationFn: (id: string) => reviewApi.delete(id),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['reviews'] }); toast.success('Xóa bình luận thành công'); },
     onError: () => toast.error('Lỗi khi xóa bình luận'),
+  });
+};
+
+// ─── Recruitment ─────────────────────────────────────
+export const useRecruitments = () =>
+  useQuery({
+    queryKey: ['recruitments'],
+    queryFn: () => recruitmentApi.getAll().then((r) => r.data.data),
+  });
+
+export const useUpdateRecruitmentStatus = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, status }: { id: string; status: RecruitmentStatus }) =>
+      recruitmentApi.updateStatus(id, status).then((r) => r.data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['recruitments'] });
+      toast.success('Cập nhật trạng thái ứng viên thành công');
+    },
+    onError: () => toast.error('Lỗi khi cập nhật trạng thái ứng viên'),
+  });
+};
+
+export const useDeleteRecruitment = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => recruitmentApi.delete(id),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['recruitments'] });
+      toast.success('Xóa hồ sơ thành công');
+    },
+    onError: () => toast.error('Lỗi khi xóa hồ sơ'),
   });
 };

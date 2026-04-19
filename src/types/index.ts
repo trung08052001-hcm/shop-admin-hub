@@ -24,6 +24,8 @@ export interface OrderItem {
 
 export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
+export type RecruitmentStatus = 'pending' | 'reviewed' | 'interviewing' | 'accepted' | 'rejected';
+
 export interface Order {
   _id: string;
   user: string | User;
@@ -79,6 +81,7 @@ export interface DashboardStats {
   totalProducts: number;
   totalOrders: number;
   totalRevenue: number;
+  totalRecruitments: number;
   recentOrders: Order[];
   ordersByStatus: Record<OrderStatus, number>;
 }
@@ -111,6 +114,16 @@ export interface ChatRoom {
   lastMessage?: string;
   unreadCountAdmin: number;
   unreadCountUser: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Recruitment {
+  _id: string;
+  userEmail: string;
+  jobTitle: string;
+  cvPath: string;
+  status: RecruitmentStatus;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Product, Order, User, Notification, OrderStatus, Review, ChatRoom, ChatMessage } from '@/types';
+import type { Product, Order, User, Notification, OrderStatus, Review, ChatRoom, ChatMessage, Recruitment, RecruitmentStatus } from '@/types';
 
 // Configure this to point to your Express.js backend
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
@@ -79,6 +79,14 @@ export const chatApi = {
   getMessages: (roomId: string) =>
     api.get<{ success: boolean; data: ChatMessage[] }>(`/chat/rooms/${roomId}/messages`).then(res => res.data.data),
   markAsRead: (roomId: string) => api.put(`/chat/rooms/${roomId}/read-admin`),
+};
+
+// ─── Recruitment ─────────────────────────────────────
+export const recruitmentApi = {
+  getAll: () => api.get<{ success: boolean; data: Recruitment[] }>('/recruitment'),
+  updateStatus: (id: string, status: RecruitmentStatus) =>
+    api.put<{ success: boolean; data: Recruitment }>(`/recruitment/${id}/status`, { status }),
+  delete: (id: string) => api.delete(`/recruitment/${id}`),
 };
 
 export default api;
