@@ -18,12 +18,12 @@ const LoginPage = () => {
     setLoading(true);
     try {
       const res = await authApi.login(email, password);
-      const { token, user } = res.data;
+      const { token, refreshToken, user } = res.data;
       if (user.role !== 'admin') {
         toast({ title: 'Lỗi', description: 'Bạn không có quyền admin', variant: 'destructive' });
         return;
       }
-      login(token, user);
+      login(token, user, refreshToken);
       navigate('/');
     } catch {
       toast({ title: 'Đăng nhập thất bại', description: 'Email hoặc mật khẩu không đúng', variant: 'destructive' });
